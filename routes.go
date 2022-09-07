@@ -2,11 +2,25 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"usc_iot_backend/common"
 	"usc_iot_backend/controller"
 )
 
+// CollectRoute 创建路由组
 func CollectRoute(r *gin.Engine) *gin.Engine {
-	r.POST("/api/device", controller.GetDeviceInfo)
+	//跨域中间件
+	r.Use(common.Cors())
+
+	//API总前缀路由组
+	apiGroup := r.Group("/api")
+
+	//设备路由组
+	deviceGroup := apiGroup.Group("/device")
+	deviceGroup.POST("/info", controller.GetDeviceInfo)
+
+	//传感器路由组
+	sensorGroup := apiGroup.Group("/sensor")
+	sensorGroup.POST("/info", controller.GetSensorInfo)
 
 	return r
 }

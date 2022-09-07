@@ -9,7 +9,7 @@ import (
 
 var DB *gorm.DB
 
-//初始化数据库
+// InitDB 初始化数据库
 func InitDB() {
 	host := "43.138.155.75"
 	port := "3306"
@@ -30,7 +30,10 @@ func InitDB() {
 	if err != nil {
 		panic("failed to connect database, err: " + err.Error())
 	}
+
+	//数据库建表
 	db.AutoMigrate(&model.Device{})
+	db.AutoMigrate(&model.Sensor{})
 
 	DB = db
 }
