@@ -6,6 +6,15 @@ import (
 )
 
 func GetDeviceInfo(ctx *gin.Context) {
+	//db := common.GetDB()
+	//
+	//user := model.Device{
+	//	Model:   gorm.Model{},
+	//	Name:    "test1",
+	//	IsOline: false,
+	//}
+	//db.Create(&user)
+
 	//获取前端传入的参数
 	id := ctx.PostForm("id")
 	if len(id) == 0 {
