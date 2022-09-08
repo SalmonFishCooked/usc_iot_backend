@@ -78,7 +78,7 @@ func CreateSensor(ctx *gin.Context) {
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code": http.StatusOK,
-			"msg":  "查询成功",
+			"msg":  "创建成功",
 			"data": sensor,
 		})
 	}

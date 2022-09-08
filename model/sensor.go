@@ -12,4 +12,5 @@ type Sensor struct {
 	TransmissionType int
 	DataType         int
 	Unit             string `gorm:"type: varchar(15);"`
+	SensorType       string
 }
