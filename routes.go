@@ -21,6 +21,7 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	//传感器路由组
 	sensorGroup := apiGroup.Group("/sensor")
 	sensorGroup.POST("/info", controller.GetSensorInfo)
+	sensorGroup.POST("/create", controller.CreateSensor)
 
 	return r
 }
