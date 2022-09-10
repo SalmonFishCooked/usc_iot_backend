@@ -14,4 +14,11 @@ type Sensor struct {
 	Unit             string `gorm:"type: varchar(15);"`
 	SensorType       string
 	SerialNumber     string
+	Channel          string
+	SlaveAddress     string
+	FunctionNumber   string
+	DataAddress      string
+	DataLength       string
+	SampleTime       int64
+	SampleFormula    string
 }
