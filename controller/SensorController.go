@@ -32,15 +32,29 @@ func GetSensorInfo(ctx *gin.Context) {
 	var sensors []model.Sensor
 	if len(json.ApiTag) == 0 {
 		//1.apiTag为空字符串
-		err := db.Where("device_id = ? AND type = ?", json.DeviceID, json.Type).Limit(json.PageSize).Offset(offset).Find(&sensors).Limit(-1).Offset(-1).Count(&count).Error
-		if err != nil {
-			panic(err)
+		if json.Type == -1 {
+			err := db.Where("device_id = ?", json.DeviceID).Limit(json.PageSize).Offset(offset).Find(&sensors).Limit(-1).Offset(-1).Count(&count).Error
+			if err != nil {
+				panic(err)
+			}
+		} else {
+			err := db.Where("device_id = ? AND type = ?", json.DeviceID, json.Type).Limit(json.PageSize).Offset(offset).Find(&sensors).Limit(-1).Offset(-1).Count(&count).Error
+			if err != nil {
+				panic(err)
+			}
 		}
 	} else {
 		//2.传入apiTag
-		err := db.Where("device_id = ? AND type = ? AND api_tag = ? ", json.DeviceID, json.Type, json.ApiTag).First(&sensors).Count(&count).Error
-		if err != nil {
-			panic(err)
+		if json.Type == -1 {
+			err := db.Where("device_id = ? AND api_tag = ? ", json.DeviceID, json.ApiTag).First(&sensors).Count(&count).Error
+			if err != nil {
+				panic(err)
+			}
+		} else {
+			err := db.Where("device_id = ? AND type = ? AND api_tag = ? ", json.DeviceID, json.Type, json.ApiTag).First(&sensors).Count(&count).Error
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 
