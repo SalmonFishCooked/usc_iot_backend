@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"usc_iot_backend/common"
-	"usc_iot_backend/tcp"
 )
 
 func main() {
@@ -14,5 +13,5 @@ func main() {
 	//启动后端服务
 	panic(r.Run())
 	//启动TCP服务器
-	go tcp.CreateTCPServer()
+	//go tcp.CreateTCPServer()
 }
