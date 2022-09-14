@@ -29,13 +29,13 @@ func CreateTCPServer() {
 		return
 	}
 	for {
-		fmt.Println("TCP Server: Waiting a new connection...")
+		fmt.Println("[TCP Server]: Waiting a new connection...")
 		conn, err := listen.Accept()
 		if err != nil {
 			fmt.Printf("accept failed, err: %v\n", err)
 			continue
 		}
-		fmt.Println("TCP Server: A new connection found.")
+		fmt.Println("[TCP Server]: TCP Server: A new connection found.")
 		go process(conn)
 	}
 }
