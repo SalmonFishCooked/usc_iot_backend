@@ -10,7 +10,7 @@ func process(conn net.Conn) {
 	defer conn.Close()
 	for {
 		reader := bufio.NewReader(conn)
-		var buf [128]byte
+		var buf [2048]byte
 		n, err := reader.Read(buf[:])
 		if err != nil {
 			fmt.Printf("read from conn failed, err: %v\n", err)
@@ -29,11 +29,13 @@ func CreateTCPServer() {
 		return
 	}
 	for {
+		fmt.Println("TCP Server: Waiting a new connection...")
 		conn, err := listen.Accept()
 		if err != nil {
 			fmt.Printf("accept failed, err: %v\n", err)
 			continue
 		}
+		fmt.Println("TCP Server: A new connection found.")
 		go process(conn)
 	}
 }

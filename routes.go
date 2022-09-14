@@ -24,5 +24,11 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	sensorGroup.POST("/create", controller.CreateSensor)
 	sensorGroup.POST("/delete", controller.DeleteSensor)
 
+	//历史传感数据路由组
+	historyGroup := apiGroup.Group("/history")
+	historyGroup.POST("/info", controller.GetHistoryInfo)
+	//historyGroup.POST("/create", controller.CreateSensor)
+	//historyGroup.POST("/delete", controller.DeleteSensor)
+
 	return r
 }

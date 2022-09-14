@@ -34,6 +34,7 @@ func InitDB() {
 	//数据库建表
 	db.AutoMigrate(&model.Device{})
 	db.AutoMigrate(&model.Sensor{})
+	db.AutoMigrate(&model.History{})
 
 	DB = db
 }
