@@ -31,6 +31,7 @@ func GetSensorInfo(ctx *gin.Context) {
 	var count int64
 	var sensors []model.Sensor
 
+	//where
 	db = db.Where("device_id = ?", json.DeviceID)
 	if len(json.ApiTag) != 0 {
 		db = db.Where("api_tag = ? ", json.ApiTag)
