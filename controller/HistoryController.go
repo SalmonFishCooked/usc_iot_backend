@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
@@ -32,6 +31,7 @@ func GetHistoryInfo(ctx *gin.Context) {
 		PageSize     int
 	}
 	var json JSON
+
 	err := ctx.BindJSON(&json)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"code": http.StatusBadRequest, "msg": "传入数据有误"})
@@ -48,9 +48,8 @@ func GetHistoryInfo(ctx *gin.Context) {
 		Joins("JOIN sensors on sensors.id = histories.sensor_id").
 		Joins("JOIN devices on devices.id = sensors.device_id")
 
-	//如果传入的SensorApiTag不为空字符串
+	//where
 	if len(json.SensorApiTag) != 0 {
-		fmt.Println("in")
 		db = db.Where("sensors.api_tag = ?", json.SensorApiTag)
 	}
 

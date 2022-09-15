@@ -30,32 +30,18 @@ func GetSensorInfo(ctx *gin.Context) {
 	offset := (json.Page - 1) * json.PageSize
 	var count int64
 	var sensors []model.Sensor
-	if len(json.ApiTag) == 0 {
-		//1.apiTag为空字符串
-		if json.Type == -1 {
-			err := db.Where("device_id = ?", json.DeviceID).Limit(json.PageSize).Offset(offset).Find(&sensors).Limit(-1).Offset(-1).Count(&count).Error
-			if err != nil {
-				panic(err)
-			}
-		} else {
-			err := db.Where("device_id = ? AND type = ?", json.DeviceID, json.Type).Limit(json.PageSize).Offset(offset).Find(&sensors).Limit(-1).Offset(-1).Count(&count).Error
-			if err != nil {
-				panic(err)
-			}
-		}
-	} else {
-		//2.传入apiTag
-		if json.Type == -1 {
-			err := db.Where("device_id = ? AND api_tag = ? ", json.DeviceID, json.ApiTag).First(&sensors).Count(&count).Error
-			if err != nil {
-				panic(err)
-			}
-		} else {
-			err := db.Where("device_id = ? AND type = ? AND api_tag = ? ", json.DeviceID, json.Type, json.ApiTag).First(&sensors).Count(&count).Error
-			if err != nil {
-				panic(err)
-			}
-		}
+
+	db = db.Where("device_id = ?", json.DeviceID)
+	if len(json.ApiTag) != 0 {
+		db = db.Where("api_tag = ? ", json.ApiTag)
+	}
+	if json.Type != -1 {
+		db = db.Where("type = ? ", json.Type)
+	}
+
+	err = db.Limit(json.PageSize).Offset(offset).Find(&sensors).Limit(-1).Offset(-1).Count(&count).Error
+	if err != nil {
+		panic(err)
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -114,15 +100,7 @@ func DeleteSensor(ctx *gin.Context) {
 		return
 	}
 
-	//查询设备ID是否存在
-	var devices []model.Device
-	db.Where("id = ?", json.DeviceID).First(&devices)
-	if len(devices) == 0 {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"code": http.StatusUnprocessableEntity, "msg": "不存在这个设备"})
-		return
-	}
-
-	//查询ApiTag是否存在
+	//判断传感器是否存在
 	var sensors []model.Sensor
 	db.Where("device_id = ? AND api_tag = ?", json.DeviceID, json.ApiTag).First(&sensors)
 	if len(sensors) == 0 {
