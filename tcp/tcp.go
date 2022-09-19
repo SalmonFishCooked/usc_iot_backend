@@ -23,7 +23,7 @@ func process(conn net.Conn) {
 }
 
 func CreateTCPServer() {
-	listen, err := net.Listen("tcp", "127.0.0.1:20000")
+	listen, err := net.Listen("tcp", "192.168.3.55:20000")
 	if err != nil {
 		fmt.Printf("listen failed, err: %v\n", err)
 		return

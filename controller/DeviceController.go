@@ -12,21 +12,37 @@ func GetDeviceInfo(ctx *gin.Context) {
 	db := common.GetDB()
 
 	//获取前端传入的参数
-	json := make(map[string]interface{}) //注意该结构接受的内容
-	ctx.ShouldBind(&json)
-	if _, ok := json["id"]; !ok {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"code": http.StatusUnprocessableEntity, "msg": "传入的值有误"})
+	type JSON struct {
+		ID       int
+		Page     int
+		PageSize int
+	}
+	var json JSON
+	err := ctx.BindJSON(&json)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"code": http.StatusBadRequest, "msg": "传入数据有误"})
 		return
 	}
 
 	//查询设备
-	var device []model.Device
-	db.Where("id = ?", json["id"]).Find(&device)
+	offset := (json.Page - 1) * json.PageSize
+	var count int64
+	var devices []model.Device
+
+	if json.ID != -1 {
+		db = db.Where("id = ?", json.ID)
+	}
+
+	err = db.Limit(json.PageSize).Offset(offset).Find(&devices).Limit(-1).Offset(-1).Count(&count).Error
+	if err != nil {
+		panic(err)
+	}
 
 	//返回结果
 	ctx.JSON(http.StatusOK, gin.H{
-		"code": http.StatusOK,
-		"msg":  "查询成功",
-		"data": device,
+		"code":  http.StatusOK,
+		"msg":   "查询成功",
+		"data":  devices,
+		"total": count,
 	})
 }
