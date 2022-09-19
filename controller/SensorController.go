@@ -53,7 +53,7 @@ func GetSensorInfo(ctx *gin.Context) {
 	})
 }
 
-// CreateSensor 获取设备传感器列表
+// CreateSensor 创建设备传感器
 func CreateSensor(ctx *gin.Context) {
 	db := common.GetDB()
 

@@ -24,6 +24,7 @@ func GetHistoryInfo(ctx *gin.Context) {
 
 	//获取前端传入的参数
 	type JSON struct {
+		DeviceID     int
 		StartTime    string
 		EndTime      string
 		SensorApiTag string
@@ -49,6 +50,8 @@ func GetHistoryInfo(ctx *gin.Context) {
 		Joins("JOIN devices on devices.id = sensors.device_id")
 
 	//where
+	db.Where("devices.id = ?", json.DeviceID)
+
 	if len(json.SensorApiTag) != 0 {
 		db = db.Where("sensors.api_tag = ?", json.SensorApiTag)
 	}
