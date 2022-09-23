@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"usc_iot_backend/utils/sendHttpRequest"
 )
 
 func process(conn net.Conn) {
@@ -13,17 +14,20 @@ func process(conn net.Conn) {
 		var buf [2048]byte
 		n, err := reader.Read(buf[:])
 		if err != nil {
-			fmt.Printf("read from conn failed, err: %v\n", err)
+			fmt.Printf("设备已经断开连接, err: %v\n", err)
 			break
 		}
 		rec := string(buf[:n])
-		fmt.Printf("接收到的数据: %v\n", rec)
-		conn.Write([]byte("ok"))
+		//发送HTTP请求
+		sendHttpRequest.SendHttpRequest(rec)
+
+		//fmt.Printf("接收到的数据: %v\n", rec)
+		//conn.Write([]byte("ok"))
 	}
 }
 
 func CreateTCPServer() {
-	listen, err := net.Listen("tcp", "192.168.3.55:20000")
+	listen, err := net.Listen("tcp", "localhost:20000")
 	if err != nil {
 		fmt.Printf("listen failed, err: %v\n", err)
 		return

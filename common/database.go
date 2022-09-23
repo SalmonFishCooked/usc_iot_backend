@@ -35,6 +35,7 @@ func InitDB() {
 	db.AutoMigrate(&model.Device{})
 	db.AutoMigrate(&model.Sensor{})
 	db.AutoMigrate(&model.History{})
+	db.AutoMigrate(&model.Actuator{})
 
 	DB = db
 }

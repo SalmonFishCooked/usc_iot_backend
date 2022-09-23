@@ -74,8 +74,8 @@ func CreateHistory(ctx *gin.Context) {
 	db := common.GetDB()
 
 	//获取前端传入的参数
-	var sensor model.Sensor
-	err := ctx.BindJSON(&sensor)
+	var history model.History
+	err := ctx.BindJSON(&history)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"code": http.StatusBadRequest, "msg": "传入数据有误"})
 		return
@@ -83,20 +83,20 @@ func CreateHistory(ctx *gin.Context) {
 
 	//查询设备ID是否存在
 	var devices []model.Device
-	db.Where("id = ?", sensor.DeviceID).First(&devices)
+	db.Where("id = ?", history.DeviceID).First(&devices)
 	if len(devices) == 0 {
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"code": http.StatusUnprocessableEntity, "msg": "不存在这个设备"})
 		return
 	}
 
 	//新增数据，返回结果
-	if err := db.Create(&sensor).Error; err != nil {
+	if err := db.Create(&history).Error; err != nil {
 		ctx.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "msg": err.Error()})
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code": http.StatusOK,
 			"msg":  "创建成功",
-			"data": sensor,
+			"data": history,
 		})
 	}
 }
