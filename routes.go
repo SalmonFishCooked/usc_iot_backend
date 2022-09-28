@@ -35,8 +35,8 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	//历史传感数据路由组
 	historyGroup := apiGroup.Group("/history")
 	historyGroup.POST("/info", controller.GetHistoryInfo)
-	//historyGroup.POST("/create", controller.CreateSensor)
-	//historyGroup.POST("/delete", controller.DeleteSensor)
+	historyGroup.POST("/create", controller.CreateHistory)
+	historyGroup.POST("/delete", controller.DeleteHistory)
 
 	return r
 }

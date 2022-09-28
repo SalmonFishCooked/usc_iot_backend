@@ -3,12 +3,14 @@ module usc_iot_backend
 go 1.18
 
 require (
+	github.com/bitly/go-simplejson v0.5.0
 	github.com/gin-gonic/gin v1.8.1
 	gorm.io/driver/mysql v1.3.6
 	gorm.io/gorm v1.23.8
 )
 
 require (
+	github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

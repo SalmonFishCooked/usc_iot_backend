@@ -3,15 +3,21 @@ package sendHttpRequest
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
+	"github.com/bitly/go-simplejson"
 	"io/ioutil"
 	"net/http"
 	"time"
+	"usc_iot_backend/model"
 )
 
-func SendHttpRequest(content string) {
-	fmt.Println(content)
-	//post("localhost:8080/api/history/create", content, "application/json")
+func SendHttpRequest(json *simplejson.Json, deviceId uint) {
+	var historyData model.History
+	historyData.DeviceID = deviceId
+	SensorIDUint, _ := json.Get("data").Get("sensorID").Uint64()
+	historyData.SensorID = uint(SensorIDUint)
+	sensorValueInt, _ := json.Get("data").Get("sensorValue").String()
+	historyData.SensorValue = sensorValueInt
+	post("http://127.0.0.1:8080/api/history/create", historyData, "application/json")
 }
 
 // Post 发送POST请求

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
@@ -76,6 +77,7 @@ func CreateHistory(ctx *gin.Context) {
 	//获取前端传入的参数
 	var history model.History
 	err := ctx.BindJSON(&history)
+	fmt.Println(history)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"code": http.StatusBadRequest, "msg": "传入数据有误"})
 		return
