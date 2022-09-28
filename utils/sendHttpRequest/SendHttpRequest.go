@@ -10,14 +10,14 @@ import (
 	"usc_iot_backend/model"
 )
 
-func SendHttpRequest(json *simplejson.Json, deviceId uint) {
+func SendHttpRequest(json *simplejson.Json, deviceId uint, URL string) {
 	var historyData model.History
 	historyData.DeviceID = deviceId
 	SensorIDUint, _ := json.Get("data").Get("sensorID").Uint64()
 	historyData.SensorID = uint(SensorIDUint)
 	sensorValueInt, _ := json.Get("data").Get("sensorValue").String()
 	historyData.SensorValue = sensorValueInt
-	post("http://127.0.0.1:8080/api/history/create", historyData, "application/json")
+	post(URL, historyData, "application/json")
 }
 
 // Post 发送POST请求

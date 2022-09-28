@@ -19,7 +19,7 @@ type HistoryDetail struct {
 	DeviceApiTag string
 }
 
-// GetHistoryInfo 获取设备传感器列表
+// GetHistoryInfo 获取历史记录
 func GetHistoryInfo(ctx *gin.Context) {
 	db := common.GetDB()
 

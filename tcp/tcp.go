@@ -28,7 +28,7 @@ func process(conn net.Conn) {
 			fmt.Println("收到t为1的设备信息值")
 		case 3:
 			//发送HTTP请求
-			sendHttpRequest.SendHttpRequest(json, 3)
+			sendHttpRequest.SendHttpRequest(json, 3, "http://127.0.0.1:8080/api/history/create")
 		}
 
 		//fmt.Printf("接收到的数据: %v\n", rec)
