@@ -38,5 +38,11 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	historyGroup.POST("/create", controller.CreateHistory)
 	historyGroup.POST("/delete", controller.DeleteHistory)
 
+	//电池数据路由组
+	batteryGroup := apiGroup.Group("/battery")
+	batteryGroup.POST("/info", controller.GetBatteryInfo)
+	//batteryGroup.POST("/create", controller.CreateBattery)
+	//batteryGroup.POST("/delete", controller.DeleteBattery)
+
 	return r
 }
