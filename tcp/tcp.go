@@ -19,7 +19,7 @@ func process(conn net.Conn) {
 			break
 		}
 		//rec := string(buf[:n])
-		json, _ := simplejson.NewJson([]byte(buf[:n]))
+		json, _ := simplejson.NewJson(buf[:n])
 
 		//利用t的值判断json传过来的数据
 		tValue, _ := json.Get("t").Int()
